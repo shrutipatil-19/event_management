@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+@extends('event-management.layout.app')
 
 @section('page-content')
 <div class="page-content">
@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active" aria-current="page">Category Table</li>
         </ol>
         <div>
-            <a href="{{ route('categories.create') }}" class="btn btn-success">Add Category</a>
+            <a href="{{ route('createCat') }}" class="btn btn-success">Add Category</a>
         </div>
     </nav>
 
@@ -25,7 +25,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Category Title</th>
-                                    <th>canonicals</th>
+                                    <th>Description</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -34,15 +34,15 @@
                                 <tr>
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->category_name }}</td>
-                                    <td>{{ $category->canonicals }}</td>
+                                    <td>{{ $category->description }}</td>
                                     <td>
                                         <!-- Edit Icon -->
-                                        <a href="{{ route('categories.edit', $category->id) }}" style="margin-right: 8px;">
+                                        <a href="{{ route('editCat', $category->id) }}" style="margin-right: 8px;">
                                             <i data-feather="edit"></i>
                                         </a>
 
                                         <!-- Delete Icon as a Form -->
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('deleteCat', $category->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <a href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this category?')) this.closest('form').submit();">

@@ -18,5 +18,11 @@ Route::middleware(['auth'])->group(function () {
         return view('welcome');
     })->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-     Route::resource('/admin/categories', CategoriesController::class);
+
+    Route::get('/add-categories', [CategoriesController::class, 'create'])->name('createCat');
+    Route::get('/list-categories', [CategoriesController::class, 'index'])->name('listCat');
+    Route::post('/create-categories', [CategoriesController::class, 'store'])->name('storeCat');
+    Route::get('/edit-categories/{id}', [CategoriesController::class, 'edit'])->name('editCat');
+    Route::put('/edit-categories/{id}', [CategoriesController::class, 'update'])->name('updateCat');
+     Route::delete('/delete-categories/{id}', [CategoriesController::class, 'delete'])->name('deleteCat');
 });

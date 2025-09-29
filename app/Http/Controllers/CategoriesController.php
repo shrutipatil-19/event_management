@@ -11,12 +11,12 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('admin/Pages/Category/listCat', compact('categories'));
+        return view('event-management/pages/Category/listCat', compact('categories'));
     }
 
     public function create()
     {
-        return view('admin/Pages/Category/AddCategory');
+        return view('event-management/pages/Category/AddCategory');
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class CategoriesController extends Controller
                
         ]);
 
-        return redirect()->route('blogs.index')->with('success', 'Category created successfully.');
+        return redirect()->route('listCat')->with('success', 'Category created successfully.');
     }
 
     public function show(Category $category)
@@ -43,7 +43,7 @@ class CategoriesController extends Controller
     public function edit( $id)
     {
         $category = category::findOrFail($id);
-        return view('admin/Pages/Category/editCat', compact('category'));
+        return view('event-management/pages/Category/editCat', compact('category'));
     }
 
     public function update(Request $request, Category $category)
@@ -58,12 +58,12 @@ class CategoriesController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('listCat')->with('success', 'Category updated successfully.');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('listCat')->with('success', 'Category deleted successfully.');
     }
 }
