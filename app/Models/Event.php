@@ -13,7 +13,9 @@ class Event extends Model
 
     protected $dates = ['publish_at', 'created_at', 'updated_at'];
 
-    
+    protected $casts = [
+        'img' => 'array',
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class);

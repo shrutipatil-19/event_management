@@ -14,7 +14,6 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
-
         return view('event-management/pages/event/listEvent', compact('events'));
     }
 
@@ -26,35 +25,38 @@ class EventController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'publish_at'  => 'required|date',
-            'status'      => 'required|in:draft,published',
-            'img'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'status'      => 'required|in:draft,published,archived',
+            'img'         => 'nullable|array',
+            'img.*'       => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $publishUtc = \Carbon\Carbon::parse($request->publish_at_local, $request->timezone)->setTimezone('UTC');
-
         $event = Event::create([
-            'user_id' => Auth::id(),
-            'category_id' => $request->category_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'publish_at' => $publishUtc,
-            'status' => 'published'
+            'user_id'     => Auth::id(),
+            'category_id' => $validated['category_id'],
+            'title'       => $validated['title'],
+            'description' => $validated['description'],
+            'publish_at'  => $validated['publish_at'],
+            'status'      => $validated['status'],
         ]);
 
         $imagePaths = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $img) {
-                $path = $img->store('products', 'public');
+
+        if ($request->hasFile('img')) {
+            foreach ($request->file('img') as $file) {
+                $path = $file->store('events', 'public'); 
                 $imagePaths[] = $path;
             }
+
+            $event->update(['img' => json_encode($imagePaths)]);
         }
-        return redirect()->route('listEvent')->with('success', 'Category created successfully.');
-        // return response()->json($event->load('photos', 'category'), 201);
+
+        return redirect()->route('listEvent')
+            ->with('success', 'Event created successfully!');
     }
     public function edit($id)
     {
@@ -65,13 +67,22 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $request->validate([
-            'category_name' => 'required|max:255|unique:categories,category_name,' . $event->id,
-            'description' => 'nullable|string',
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'publish_at'  => 'required|date',
+            'status'      => 'required|in:draft,published,archived',
+            'img'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        $publishUtc = \Carbon\Carbon::parse($request->publish_at_local, $request->timezone)->setTimezone('UTC');
 
         $event->update([
-            'category_name' => $request->category_name,
+            'user_id' => Auth::id(),
+            'category_id' => $request->category_id,
+            'title' => $request->title,
             'description' => $request->description,
+            'publish_at' => $publishUtc,
+            'status' => 'published'
         ]);
 
         return redirect()->route('listEvent')->with('success', 'Event updated successfully.');

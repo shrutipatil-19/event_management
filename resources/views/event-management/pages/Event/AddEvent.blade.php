@@ -26,8 +26,8 @@
                     </div>
                     @endif
 
-                    <!-- Category Form -->
-                    <form action="{{ route('storeCat') }}" method="POST">
+
+                    <form action="{{ route('storeEvent') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label>Title</label>
@@ -41,22 +41,21 @@
 
                         <div class="mb-3">
                             <label>User</label>
-                            <select name="user_id" class="form-control select2" multiple>
+                            <select name="user_id" class="form-control select2">
                                 @foreach ($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-
+      
                         <div class="mb-3">
                             <label>Category</label>
-                            <select name="category_id" class="form-control select2" multiple>
+                            <select name="category_id" class="form-control select2">
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
-
                         </div>
+
                         <div class="mb-3">
                             <label>Publish At</label>
                             <input type="datetime-local" name="publish_at" class="form-control" required>
@@ -67,17 +66,18 @@
                             <select name="status" class="form-control" required>
                                 <option value="draft">Draft</option>
                                 <option value="published">Published</option>
-                                <option value="archived">archived</option>
+                                <option value="archived">Archived</option>
                             </select>
                         </div>
-                        
+
                         <div class="mb-3">
-                            <label>Event Image</label>
-                            <input type="file" name="img" class="form-control">
+                            <label>Upload Images</label>
+                            <input type="file" name="img[]" multiple class="form-control">
                         </div>
 
                         <button type="submit" class="btn btn-success">Save</button>
                     </form>
+
 
                 </div>
             </div>

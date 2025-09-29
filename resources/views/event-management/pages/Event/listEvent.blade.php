@@ -9,7 +9,7 @@
             <li class="breadcrumb-item active" aria-current="page">Category Table</li>
         </ol>
         <div>
-            <a href="{{ route('createCat') }}" class="btn btn-success">Add Category</a>
+            <a href="{{ route('createEvent') }}" class="btn btn-success">Add Category</a>
         </div>
     </nav>
 
@@ -17,38 +17,30 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Category Table</h6>
+                    <h6 class="card-title">Event Table</h6>
                     <!-- <p class="text-secondary mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> -->
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Category Title</th>
+                                    <th>events Title</th>
                                     <th>Description</th>
+                                    <th>User</th>
+                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($events as $event)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
-                                    <td>{{ $category->category_name }}</td>
-                                    <td>{{ $category->description }}</td>
+                                    <td>{{ $event->id }}</td>
+                                    <td>{{ $event->title }}</td>
+                                    <td>{{ $event->description }}</td>
+                                    <td>{{ $event->user->name }}</td>
+                                    <td>{{ $event->category->category_name }}</td>
                                     <td>
-                                        <!-- Edit Icon -->
-                                        <a href="{{ route('editCat', $category->id) }}" style="margin-right: 8px;">
-                                            <i data-feather="edit"></i>
-                                        </a>
-
-                                        <!-- Delete Icon as a Form -->
-                                        <form action="{{ route('deleteCat', $category->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="#" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this category?')) this.closest('form').submit();">
-                                                <i data-feather="trash-2" style="color: red;"></i>
-                                            </a>
-                                        </form>
+                                      
                                     </td>
 
                                 </tr>
