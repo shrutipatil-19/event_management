@@ -53,62 +53,9 @@
                         <li class="nav-item">
                             <a href="" class="nav-link">List Category</a>
                         </li>
-                       
-                    </ul>
-                </div>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="collapse" href="#uiComponentsStock" role="button" aria-expanded="false" aria-controls="uiComponents">
-                    <i class="link-icon" data-feather="mail"></i>
-                    <span class="link-title">Reports</span>
-                    <i class="link-arrow" data-feather="chevron-down"></i>
-                </a>
-                <div class="collapse" data-bs-parent="#sidebarNav" id="uiComponentsStock">
-                    <ul class="nav sub-menu">
-                        <li class="nav-item">
-                            <a href="" class="nav-link">Low Stock Report Stock</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">History per Product</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">Stock Value Report</a>
-                        </li>
                     </ul>
                 </div>
-            </li>
-  
-            <li class="nav-item">
-                <a href="{{ route('addUser') }}" class="nav-link">
-                    <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Add Users</span>
-                </a>
-            </li>
-            <li class="nav-item nav-category">Suppliers</li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="hash"></i>
-                    <span class="link-title">Add Supplier</span>
-                </a>
-            </li>
-            <li class="nav-item mt-2">
-                <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="hash"></i>
-                    <span class="link-title">Customer</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="hash"></i>
-                    <span class="link-title">Manage Suppliers</span>
-                </a>
-            </li>
-            <li class="nav-item mt-2">
-                <a href="" class="nav-link">
-                    <i class="link-icon" data-feather="hash"></i>
-                    <span class="link-title">Settings</span>
-                </a>
             </li>
         </ul>
     </div>

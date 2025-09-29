@@ -6,10 +6,10 @@
     <nav class="page-breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Tables</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Category Table</li>
+            <li class="breadcrumb-item active" aria-current="page">Event Table</li>
         </ol>
         <div>
-            <a href="{{ route('createEvent') }}" class="btn btn-success">Add Category</a>
+            <a href="{{ route('createEvent') }}" class="btn btn-success">Add Event</a>
         </div>
     </nav>
 
@@ -18,6 +18,13 @@
             <div class="card">
                 <div class="card-body">
                     <h6 class="card-title">Event Table</h6>
+                    <form method="GET" action="{{ route('listEvent') }}" class="mb-3">
+                        <select name="filter" class="form-control" onchange="this.form.submit()">
+                            <option value="">-- Filter by Status --</option>
+                            <option value="published" {{ request('filter') == 'published' ? 'selected' : '' }}>Published</option>
+                            <option value="waiting" {{ request('filter') == 'waiting' ? 'selected' : '' }}>Waiting / Not Published</option>
+                        </select>
+                    </form>
                     <!-- <p class="text-secondary mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> -->
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">
@@ -40,7 +47,7 @@
                                     <td>{{ $event->user->name }}</td>
                                     <td>{{ $event->category->category_name }}</td>
                                     <td>
-                                      
+
                                     </td>
 
                                 </tr>

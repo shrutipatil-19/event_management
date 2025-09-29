@@ -8,14 +8,12 @@
                 <div class="card-body">
                     <h6 class="card-title">Add Event</h6>
 
-                    {{-- Success Message --}}
                     @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                     @endif
 
-                    {{-- Validation Errors --}}
                     @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>

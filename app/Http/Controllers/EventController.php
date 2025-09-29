@@ -6,17 +6,37 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PHPUnit\Event\Event as EventEvent;
 
 class EventController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $events = Event::all();
+    //     return view('event-management/pages/event/listEvent', compact('events'));
+    // }
+    public function index(Request $request)
     {
-        $events = Event::all();
+        $query = Event::with(['user', 'category']);
+
+        if ($request->filter == 'published') {
+            $query->where('status', 'published')
+                ->where('publish_at', '<=', Carbon::now('UTC'));
+        }
+
+        if ($request->filter == 'waiting') {
+            $query->where(function ($q) {
+                $q->where('status', 'draft')
+                    ->orWhere('publish_at', '>', Carbon::now('UTC'));
+            });
+        }
+
+        $events = $query->orderBy('publish_at', 'desc')->paginate(10);
+
         return view('event-management/pages/event/listEvent', compact('events'));
     }
-
     public function create()
     {
         $users = User::get();
@@ -48,7 +68,7 @@ class EventController extends Controller
 
         if ($request->hasFile('img')) {
             foreach ($request->file('img') as $file) {
-                $path = $file->store('events', 'public'); 
+                $path = $file->store('events', 'public');
                 $imagePaths[] = $path;
             }
 

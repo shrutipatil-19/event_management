@@ -25,12 +25,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/create-categories', [CategoriesController::class, 'store'])->name('storeCat');
     Route::get('/edit-categories/{id}', [CategoriesController::class, 'edit'])->name('editCat');
     Route::put('/edit-categories/{id}', [CategoriesController::class, 'update'])->name('updateCat');
-     Route::delete('/delete-categories/{id}', [CategoriesController::class, 'delete'])->name('deleteCat');
+    Route::delete('/delete-categories/{id}', [CategoriesController::class, 'delete'])->name('deleteCat');
 
-     Route::get('/add-event', [EventController::class, 'create'])->name('createEvent');
+    Route::get('/add-event', [EventController::class, 'create'])->name('createEvent');
     Route::get('/list-events', [EventController::class, 'index'])->name('listEvent');
+
+    // Published events
+    Route::get('/events/published', [EventController::class, 'published'])->name('events.published');
+
+    // Waiting / Not published events
+    Route::get('/events/waiting', [EventController::class, 'waiting'])->name('events.waiting');
     Route::post('/create-event', [EventController::class, 'store'])->name('storeEvent');
     Route::get('/edit-event/{id}', [EventController::class, 'edit'])->name('editEvent');
     Route::put('/edit-event/{id}', [EventController::class, 'update'])->name('updateEvent');
-     Route::delete('/delete-event/{id}', [EventController::class, 'delete'])->name('deleteEvent');
+    Route::delete('/delete-event/{id}', [EventController::class, 'delete'])->name('deleteEvent');
 });
