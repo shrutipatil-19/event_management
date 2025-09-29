@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Event\Event;
 
 class Category extends Model
 {
@@ -10,4 +11,9 @@ class Category extends Model
         'category_name',
         'description',
     ];
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
 }

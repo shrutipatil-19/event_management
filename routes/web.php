@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/edit-categories/{id}', [CategoriesController::class, 'edit'])->name('editCat');
     Route::put('/edit-categories/{id}', [CategoriesController::class, 'update'])->name('updateCat');
      Route::delete('/delete-categories/{id}', [CategoriesController::class, 'delete'])->name('deleteCat');
+
+     Route::get('/add-event', [EventController::class, 'create'])->name('createEvent');
+    Route::get('/list-events', [EventController::class, 'index'])->name('listEvent');
+    Route::post('/create-event', [EventController::class, 'store'])->name('storeEvent');
+    Route::get('/edit-event/{id}', [EventController::class, 'edit'])->name('editEvent');
+    Route::put('/edit-event/{id}', [EventController::class, 'update'])->name('updateEvent');
+     Route::delete('/delete-event/{id}', [EventController::class, 'delete'])->name('deleteEvent');
 });
