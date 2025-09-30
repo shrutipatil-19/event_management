@@ -30,10 +30,10 @@
                 <div class="collapse" data-bs-parent="#sidebarNav" id="emails">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="" class="nav-link">List Events</a>
+                            <a href="{{ route('listEvent') }}" class="nav-link">List Events</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Add Events</a>
+                            <a href="{{ route('createEvent') }}" class="nav-link">Add Events</a>
                         </li>
                     </ul>
                 </div>
@@ -48,10 +48,10 @@
                 <div class="collapse" data-bs-parent="#sidebarNav" id="uiComponents">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="" class="nav-link">Add Category</a>
+                            <a href="{{ route('createCat') }}" class="nav-link">Add Category</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">List Category</a>
+                            <a href="{{ route('listCat') }}" class="nav-link">List Category</a>
                         </li>
 
                     </ul>

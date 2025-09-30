@@ -17,26 +17,37 @@ class EventController extends Controller
     //     $events = Event::all();
     //     return view('event-management/pages/event/listEvent', compact('events'));
     // }
+
+
     public function index(Request $request)
     {
         $query = Event::with(['user', 'category']);
 
-        if ($request->filter == 'published') {
+        $now = Carbon::now('UTC');
+
+        if ($request->filter === 'published') {
             $query->where('status', 'published')
-                ->where('publish_at', '<=', Carbon::now('UTC'));
+                ->where('publish_at', '<=', $now);
         }
 
-        if ($request->filter == 'waiting') {
-            $query->where(function ($q) {
+        if ($request->filter === 'waiting') {
+            $query->where(function ($q) use ($now) {
                 $q->where('status', 'draft')
-                    ->orWhere('publish_at', '>', Carbon::now('UTC'));
+                    ->orWhere(function ($q2) use ($now) {
+                        $q2->where('status', 'published')
+                            ->where('publish_at', '>', $now);
+                    });
             });
         }
 
-        $events = $query->orderBy('publish_at', 'desc')->paginate(10);
+        $events = $query->orderBy('publish_at', 'desc')
+            ->paginate(10)
+            ->appends(['filter' => $request->filter]);
 
-        return view('event-management/pages/event/listEvent', compact('events'));
+        return view('event-management.pages.event.listEvent', compact('events'));
     }
+
+
     public function create()
     {
         $users = User::get();
@@ -55,13 +66,16 @@ class EventController extends Controller
             'img.*'       => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $publishUtc = Carbon::parse($request->publish_at, $request->timezone ?? 'Asia/Kolkata')
+            ->setTimezone('UTC');
+
         $event = Event::create([
             'user_id'     => Auth::id(),
-            'category_id' => $validated['category_id'],
-            'title'       => $validated['title'],
-            'description' => $validated['description'],
-            'publish_at'  => $validated['publish_at'],
-            'status'      => $validated['status'],
+            'category_id' => $request->category_id,
+            'title'       => $request->title,
+            'description' => $request->description,
+            'publish_at'  => $publishUtc,
+            'status'      => $request->status,
         ]);
 
         $imagePaths = [];

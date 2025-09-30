@@ -21,10 +21,11 @@
                     <form method="GET" action="{{ route('listEvent') }}" class="mb-3">
                         <select name="filter" class="form-control" onchange="this.form.submit()">
                             <option value="">-- Filter by Status --</option>
-                            <option value="published" {{ request('filter') == 'published' ? 'selected' : '' }}>Published</option>
-                            <option value="waiting" {{ request('filter') == 'waiting' ? 'selected' : '' }}>Waiting / Not Published</option>
+                            <option value="published" {{ request('filter') == 'published' ? 'selected' : '' }}>Waiting / Not Published </option>
+                            <option value="waiting" {{ request('filter') == 'waiting' ? 'selected' : '' }}>Published</option>
                         </select>
                     </form>
+
                     <!-- <p class="text-secondary mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official DataTables Documentation </a>for a full list of instructions and other options.</p> -->
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">

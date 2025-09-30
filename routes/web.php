@@ -30,10 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/add-event', [EventController::class, 'create'])->name('createEvent');
     Route::get('/list-events', [EventController::class, 'index'])->name('listEvent');
 
-    // Published events
     Route::get('/events/published', [EventController::class, 'published'])->name('events.published');
 
-    // Waiting / Not published events
     Route::get('/events/waiting', [EventController::class, 'waiting'])->name('events.waiting');
     Route::post('/create-event', [EventController::class, 'store'])->name('storeEvent');
     Route::get('/edit-event/{id}', [EventController::class, 'edit'])->name('editEvent');
