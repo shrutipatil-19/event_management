@@ -22,7 +22,6 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $query = Event::with(['user', 'category']);
-
         $now = Carbon::now('UTC');
 
         if ($request->filter === 'published') {
@@ -38,6 +37,10 @@ class EventController extends Controller
                             ->where('publish_at', '>', $now);
                     });
             });
+        }
+
+        if ($request->filter === 'archived') {
+            $query->where('status', 'archived');
         }
 
         $events = $query->orderBy('publish_at', 'desc')
