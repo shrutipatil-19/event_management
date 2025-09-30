@@ -17,7 +17,7 @@ Route::post('/register', [UserController::class, 'storeUser'])->name('storeUser'
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
-    })->name('dashboard');
+    })->name('welcome');
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/add-categories', [CategoriesController::class, 'create'])->name('createCat');
